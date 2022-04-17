@@ -13,7 +13,7 @@ window.onload = function() {
   let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   let numeros2 = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
 
-  let newCard = (valor) => {
+  let newCard = valor => {
     for (let i = 0; i < valor; i++) {
       //El codigo de abajo crea la carta
       let card = document.createElement("div");
@@ -51,16 +51,16 @@ window.onload = function() {
       // Este objeto me almacena los valores relevantes de la carta
       arrayOfCards.push({
         pinta: pintas[pintaAleatoria],
-        numero: numeros[numeroAleatorio],
+        numero: numeros[numeroAleatorio]
       });
     }
   };
 
-  draw.addEventListener("click", (e) => {
+  draw.addEventListener("click", e => {
     newCard(numberOfCards.value);
   });
 
-  let otherCard = (valor) => {
+  let otherCard = valor => {
     let containerForEachGroupOfCards = document.createElement("div");
     for (let i = 0; i < valor.length; i++) {
       let card = document.createElement("div");
@@ -125,27 +125,43 @@ window.onload = function() {
     }
   };
 
-  const bubbleSort = (arr) => {
-    let wall = arr.length - 1; //we start the wall at the end of the array
-    while (wall > 0) {
-      let index = 0;
-      while (index < wall) {
-        //compare the adjacent positions, if the right one is bigger, we have to swap
-        if (arr[index].numero > arr[index + 1].numero) {
-          let aux = arr[index];
-          arr[index] = arr[index + 1];
-          arr[index + 1] = aux;
-        }
-        otherCard(arrayOfCards);
-        index++;
-      }
+  // const selectionSort = (arr) => {
+  //   let wall = arr.length - 1; //we start the wall at the end of the array
+  //   while (wall > 0) {
+  //     let index = 0;
+  //     while (index < wall) {
+  //       //compare the adjacent positions, if the right one is bigger, we have to swap
+  //       if (arr[index].numero > arr[index + 1].numero) {
+  //         let aux = arr[index];
+  //         arr[index] = arr[index + 1];
+  //         arr[index + 1] = aux;
+  //       }
+  //       otherCard(arrayOfCards);
+  //       index++;
+  //     }
 
-      wall--; //decrease the wall for optimization
+  //     wall--; //decrease the wall for optimization
+  //   }
+  //   return arr;
+  // };
+
+  const selectionSort = arr => {
+    let min = 0;
+    while (min < arr.length - 1) {
+      for (let i = min + 1; i < arr.length; i++) {
+        if (arr[min].numero > arr[i].numero) {
+          let aux = arr[min];
+          arr[min] = arr[i];
+          arr[i] = aux;
+        }
+      }
+      otherCard(arrayOfCards);
+      min++;
     }
     return arr;
   };
 
-  sort.addEventListener("click", (e) => {
-    bubbleSort(arrayOfCards);
+  sort.addEventListener("click", e => {
+    selectionSort(arrayOfCards);
   });
 };
